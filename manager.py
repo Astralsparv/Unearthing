@@ -1,4 +1,4 @@
-from map import map_load, map_get, map_set
+from map import map_load, map_get, map_set, spawn_ores
 
 current_map={
     "width": 0,
@@ -20,6 +20,13 @@ def set_map(map):
     global player
 
     current_map,player["x"],player["y"]=map_load(f"maps/{map}")
+
+def gen_map():
+    global current_map
+    global player
+
+    spawn_ores(current_map,player["x"],player["y"])
+
 
 def mget(x,y):
     return map_get(x,y,current_map)

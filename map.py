@@ -5,13 +5,33 @@
 # where x,y of map == map[y][x]
 #
 
-from ansi import pretty
+from random import randint, randrange as randfloat
+from tiles import char_to_tile, tile_render, can_spawn_ores
+
+def randomDir():
+    d=randint(0,3)
+    if (d==0):
+        return -1,0
+    elif (d==1):
+        return 1,0
+    elif (d==2):
+        return 0,-1
+    elif (d==3):
+        return 0,1
 
 def map_get(x,y,map):
-    return map["data"][y][x]
+    if (len(map["data"])<=y):
+        return 0
+    elif (len(map["data"][y])<=x):
+        return 0
+    else:
+        return map["data"][y][x]
 
 def map_set(x,y,v,map):
-    map["data"][y][x]=v
+    if (isinstance(v,str)):
+        map["data"][y][x]=char_to_tile[v]
+    else:
+        map["data"][y][x]=v
 
 def map_load(map_src):
     # convert map.txt -> 2d array
@@ -21,17 +41,18 @@ def map_load(map_src):
     py=0
 
     mapdat=[]
-    with open(map_src,"r") as f:
+    with open(f"{map_src}.txt","r") as f:
         mapdat=f.read().split("\n") # full .txt into rows
     for i in range(len(mapdat)):
         mapdat[i]=list(mapdat[i]) # each row into row,column (y,x)
         for j in range(len(mapdat[i])):
             char=mapdat[i][j]
             if (char=="@"): # player
-                px=i
-                py=j
-                mapdat[i][j]="."
-                break
+                px=j
+                py=i
+                mapdat[i][j]=char_to_tile["."]
+            else:
+                mapdat[i][j]=char_to_tile[mapdat[i][j]]
     
     map={
         "data":mapdat,
@@ -41,11 +62,14 @@ def map_load(map_src):
     
     return map,px,py
 
-def map_render(map):
-    txt=""
+# spawn ores in valid locations in the given map
+# ix,iy == player x,y == cannot spawn
+
+def spawn_ores(map,ix,iy):
     for y in range(map["height"]):
         for x in range(map["width"]):
-            t=map_get(x,y,map)
-            txt+=pretty(t)
-        txt+="\n"
-    return txt
+            if (x!=ix and y!=iy):
+                t=map_get(x,y,map)
+                ore_chance=can_spawn_ores(t)
+                if (randfloat(0,100)<ore_chance):
+                    map_set(x,y,"S",map)
