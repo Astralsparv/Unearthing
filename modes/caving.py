@@ -66,6 +66,7 @@ def draw():
         printy=2
         cprint(f"map w,h: {manager.current_map["width"]},{manager.current_map["height"]}")
         cprint(f"player x,y: {manager.player["x"]},{manager.player["y"]}")
+        cprint(f"{manager.current_map["ladder_spots"]}")
 #        cprint(f"{is_interactable(mget(player["x"],player["y"]))} {mget(player["x"],player["y"])}")
 #        cprint(f"{tiles[mget(player["x"],player["y"])]}")
 
@@ -114,7 +115,7 @@ def update():
                     if (interaction=="pickup"):
                         give_item(manager.player,extra,1)
                         mset(x,y,".")
-                    elif (interaction=="goto"):
+                    elif (interaction=="go_to"):
                         set_map_programatically(extra)
             if (secondary=="q"): #attack or mine, default to mine for now; when hotbar added check that
                 # assume mining
@@ -123,8 +124,8 @@ def update():
                 if (mineable):
                     mset(x,y,mineable["becomes"])
                     give_loot_table(manager.player,mineable["loot_table"])
-                    if (tiles[tile]["ladder"]):
-                        chance=(1/manager.current_map["ladder_spots"])
+                    if ("ladder_spot" in tiles[tile]):
+                        chance=(1/manager.current_map["ladder_spots"])*100
                         manager.current_map["ladder_spots"]-=1
                         if (manager.current_map["ladder_spots"]==0):
                             mset(x,y,"o") #ensure is always a ladder

@@ -53,8 +53,6 @@ tiles=[
         "display":".",
         "fgcol": 94,
         "solid": False,
-        "ore_spawnable":5,
-        "enemy_spawnable":True,
         "id":".ws"
     },
     { # weak soil
@@ -162,6 +160,8 @@ def is_interactable(tile):
     if (tile>=0 and len(tiles)>tile):
         if ("pickup" in tiles[tile]):
             return "pickup",tiles[tile]["pickup"]
+        if ("go_to" in tiles[tile]):
+            return "go_to",tiles[tile]["go_to"]
     return False,None
 
 def is_mineable(tile):

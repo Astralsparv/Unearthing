@@ -55,6 +55,7 @@ def map_load(map_src):
             else:
                 mapdat[i][j]=char_to_tile[mapdat[i][j]]
             if ("ladder_spawn" in tiles[mapdat[i][j]]):
+                mapdat[i][j]=" "
                 ladder_spots+=1
     
     map={
@@ -77,3 +78,5 @@ def spawn_ores(map,ix,iy):
                 ore_chance=can_spawn_ores(t)
                 if (randfloat(0,100)<ore_chance):
                     map_set(x,y,"S",map)
+                if ("ladder_spot" in tiles[map_get(x,y,map)]):
+                    map["ladder_spots"]+=1

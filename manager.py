@@ -27,6 +27,7 @@ def set_map_programatically(map_type):
     if (map_type=="new_cave"):
         map=f"caves/{randint(0,2)}"
     current_map,player["x"],player["y"]=map_load(f"maps/{map}")
+    gen_map()
 
 def set_map(map):
     global current_map
@@ -39,6 +40,7 @@ def gen_map():
     global player
 
     spawn_ores(current_map,player["x"],player["y"])
+    
 
 
 def mget(x,y):

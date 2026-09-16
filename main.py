@@ -7,7 +7,6 @@ from gameloop import draw, update
 #set_map("cave/2")
 #set_map("test")
 set_map_programatically("new_cave")
-gen_map()
 
 # avoid anything from previous runtimes flooding
 clear()
