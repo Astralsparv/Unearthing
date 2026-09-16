@@ -1,4 +1,7 @@
 from map import map_load, map_get, map_set, spawn_ores
+import caving
+
+current_section="title"
 
 current_map={
     "width": 0,
@@ -33,3 +36,15 @@ def mget(x,y):
 
 def mset(x,y,v):
     map_set(x,y,v,current_map)
+
+def update():
+    if (current_section=="title"):
+        title.update()
+    else:
+        caving.update()
+
+def draw():
+    if (current_section=="title"):
+        title.draw()
+    else:
+        caving.draw()
