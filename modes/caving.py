@@ -1,7 +1,8 @@
 from graphics import clear,draw_at
 from tiles import tile_render,is_interactable,tiles
 import manager
-from manager import mget
+from manager import mget, set_map_programatically
+from random import randrange as randfloat
 
 printx,printy=0,0
 
@@ -109,10 +110,12 @@ def update():
                 manager.player["x"]=x
                 manager.player["y"]=y
                 if (primary=="e"):
-                    interaction,new_item=is_interactable(tile)
+                    interaction,extra=is_interactable(tile)
                     if (interaction=="pickup"):
-                        give_item(manager.player,new_item,1)
+                        give_item(manager.player,extra,1)
                         mset(x,y,".")
+                    elif (interaction=="goto"):
+                        set_map_programatically(extra)
             if (secondary=="q"): #attack or mine, default to mine for now; when hotbar added check that
                 # assume mining
                 tile=mget(x,y)
@@ -120,3 +123,10 @@ def update():
                 if (mineable):
                     mset(x,y,mineable["becomes"])
                     give_loot_table(manager.player,mineable["loot_table"])
+                    if (tiles[tile]["ladder"]):
+                        chance=(1/manager.current_map["ladder_spots"])
+                        manager.current_map["ladder_spots"]-=1
+                        if (manager.current_map["ladder_spots"]==0):
+                            mset(x,y,"o") #ensure is always a ladder
+                        elif (randfloat(0,100)<=chance):
+                            mset(x,y,"o")

@@ -1,0 +1,27 @@
+Welcome to The Unearthing, an Action & Exploration Fantasy game.
+
+The aim of the game is to delve through the mines and mine resources to be able to sell them and upgrade your equipment.
+Throughout the game, you may uncover new information about the story of the town that you find yourself in.
+
+
+Controls
+
+The game does not run in real time, and only updates when you make an action.
+
+You input by writing up to 2 characters and pressing enter.
+
+Leaving it blank will update the game (e.g: enemies will move around) and you will have no actions.
+
+[Actions]
+
+You can type 'w', 'a', 's' or 'd' to set the direction you want your action to be.
+
+By typing a direction and pressing enter; you will move in that direction.
+
+If you type 'q' aswell, e.g: 'wq', you will make your action UP (but you will not move physically).
+
+Your action will be based on the held item, being a weapon or a pickaxe.
+
+If you are holding a weapon, you will attack in that direction - damaging enemies around you.
+
+If you are holding a pickaxe, you will mine in that direction - breaking the tile if possible.

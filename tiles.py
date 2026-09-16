@@ -38,6 +38,17 @@ tiles=[
         "pickup":"floatie",
         "id":"f"
     },
+    {
+        "display": ":",
+        "fgcol": 94,
+        "id": ":"
+    },
+    {
+        "display": "o",
+        "fgcol": 94,
+        "id": "o",
+        "go_to": "new_cave"
+    },
     { # weak soil (mined)
         "display":".",
         "fgcol": 94,
@@ -72,6 +83,7 @@ tiles=[
         "id":"S",
         "fgcol": 248,
         "solid": True,
+        "ladder_spot": True,
         "mineable": {
             "becomes":".",
             "loot_table":[
@@ -92,19 +104,22 @@ tiles=[
     { # coal
         "display":"%",
         "id":"C",
-        "solid": True
+        "solid": True,
+        "ladder_spot": True
         #form - needed
     },
     { # iron
         "display":"%",
         "id":"I",
-        "solid": True
+        "solid": True,
+        "ladder_spot": True
         #form - needed
     },
     { # gold
         "display":"%",
         "id":"G",
-        "solid": True
+        "solid": True,
+        "ladder_spot": True
         #form - needed
     }
 ]

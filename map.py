@@ -6,7 +6,7 @@
 #
 
 from random import randint, randrange as randfloat
-from tiles import char_to_tile, tile_render, can_spawn_ores
+from tiles import char_to_tile, tile_render, can_spawn_ores, tiles
 
 def randomDir():
     d=randint(0,3)
@@ -41,6 +41,7 @@ def map_load(map_src):
     py=0
 
     mapdat=[]
+    ladder_spots=0
     with open(f"{map_src}.txt","r") as f:
         mapdat=f.read().split("\n") # full .txt into rows
     for i in range(len(mapdat)):
@@ -53,11 +54,14 @@ def map_load(map_src):
                 mapdat[i][j]=char_to_tile["."]
             else:
                 mapdat[i][j]=char_to_tile[mapdat[i][j]]
+            if ("ladder_spawn" in tiles[mapdat[i][j]]):
+                ladder_spots+=1
     
     map={
         "data":mapdat,
         "width":len(mapdat[0]),
         "height":len(mapdat),
+        "ladder_spots":ladder_spots
     }
     
     return map,px,py
