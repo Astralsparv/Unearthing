@@ -1,5 +1,5 @@
 from graphics import clear,draw_at
-from manager import set_section
+from manager import set_section,text
 
 printx,printy=0,0
 
@@ -21,11 +21,11 @@ with open("graphics/title.txt","r") as f:
 
 options=[
     {
-        "label":"Start Game",
+        "label":"title.new_game",
         "section":"caving"
     },
     {
-        "label":"Manual",
+        "label":"title.manual",
         "section":"manual"
     }
 ]
@@ -42,7 +42,7 @@ def draw():
         str=""
         if (current_option==ind):
             str="> "
-        str+=f"{opt["label"]}"
+        str+=f"{text(opt["label"])}"
         print(str)
     
 def update():

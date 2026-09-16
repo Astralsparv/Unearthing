@@ -6,7 +6,7 @@
 #
 
 from random import randint, randrange as randfloat
-from tiles import char_to_tile, tile_render, can_spawn_ores, tiles
+from tiles import char_to_tile, tile_render, can_spawn_ores, tiles, get_ore_to_spawn
 
 def randomDir():
     d=randint(0,3)
@@ -62,7 +62,8 @@ def map_load(map_src):
         "data":mapdat,
         "width":len(mapdat[0]),
         "height":len(mapdat),
-        "ladder_spots":ladder_spots
+        "ladder_spots":ladder_spots,
+        "ladder_spawned": False
     }
     
     return map,px,py
@@ -77,6 +78,6 @@ def spawn_ores(map,ix,iy):
                 t=map_get(x,y,map)
                 ore_chance=can_spawn_ores(t)
                 if (randfloat(0,100)<ore_chance):
-                    map_set(x,y,"S",map)
+                    map_set(x,y,get_ore_to_spawn(),map)
                 if ("ladder_spot" in tiles[map_get(x,y,map)]):
                     map["ladder_spots"]+=1

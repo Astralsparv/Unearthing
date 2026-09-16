@@ -1,19 +1,23 @@
 from ansi import form, col
+from random import randrange as randfloat
 
 tiles=[
     { # oob
         "display":" ",
+        "name": "OOB",
         "solid":True,
         "id":" "
     },
     { # cave wall
         "display":"#",
+        "name": "wall",
         "fgcol": 248,
         "solid":True,
         "id":"#"
     },
     {
         "display":".",
+        "name": "floor",
         "fgcol": 8,
         "solid": False,
         "ore_spawnable":5,
@@ -22,41 +26,48 @@ tiles=[
     },
     {
         "display":"^",
+        "name": "water",
         "fgcol": 32,
         "passthrough_requires_item":"floatie",
         "id":"^"
     },
     {
         "display":"~",
+        "name": "water",
         "fgcol": 32,
         "passthrough_requires_item":"floatie",
         "id":"~"
     },
     {
         "display":"f",
+        "name": "floatie",
         "fgcol": 196,
         "pickup":"floatie",
         "id":"f"
     },
     {
         "display": ":",
+        "name": "ladder",
         "fgcol": 94,
         "id": ":"
     },
     {
         "display": "o",
+        "name": "shaft",
         "fgcol": 94,
         "id": "o",
         "go_to": "new_cave"
     },
     { # weak soil (mined)
         "display":".",
+        "name": "weak_soil_dug",
         "fgcol": 94,
         "solid": False,
         "id":".ws"
     },
     { # weak soil
         "display":",",
+        "name": "weak_soil",
         "fgcol": 94,
         "id":",",
         "mineable": {
@@ -78,10 +89,12 @@ tiles=[
     },
     { # stone
         "display":"*",
+        "name": "stone",
         "id":"S",
         "fgcol": 248,
         "solid": True,
         "ladder_spot": True,
+        "ore": -1, # the stone is the default, when no other ores spawn; becomes stone
         "mineable": {
             "becomes":".",
             "loot_table":[
@@ -92,33 +105,107 @@ tiles=[
                 },
                 {
                     "item":"stone",
-                    "chance":30,
+                    "chance":100,
                     "count":1
                 }
             ]
         }
-        #form - needed
     },
     { # coal
         "display":"%",
-        "id":"C",
+        "name": "coal",
+        "id":"Coal",
+        "fgcol": 242,
         "solid": True,
-        "ladder_spot": True
-        #form - needed
+        "ladder_spot": True,
+        "ore": 60,
+        "mineable": {
+            "becomes":".",
+            "loot_table":[
+                {
+                    "item":"coal",
+                    "chance":100,
+                    "count":1
+                },
+                {
+                    "item":"coal",
+                    "chance":10,
+                    "count":1
+                }
+            ]
+        }
+    },
+    { # copper
+        "display":"%",
+        "name": "copper",
+        "id":"Cop",
+        "fgcol": 208,
+        "solid": True,
+        "ladder_spot": True,
+        "ore": 55,
+        "mineable": {
+            "becomes":".",
+            "loot_table":[
+                {
+                    "item":"copper",
+                    "chance":100,
+                    "count":1
+                },
+                {
+                    "item":"copper",
+                    "chance":8,
+                    "count":1
+                }
+            ]
+        }
     },
     { # iron
         "display":"%",
+        "name": "iron",
         "id":"I",
+        "fgcol": 216,
         "solid": True,
-        "ladder_spot": True
-        #form - needed
+        "ladder_spot": True,
+        "ore": 40,
+        "mineable": {
+            "becomes":".",
+            "loot_table":[
+                {
+                    "item":"iron",
+                    "chance":100,
+                    "count":1
+                },
+                {
+                    "item":"iron",
+                    "chance":6,
+                    "count":1
+                }
+            ]
+        }
     },
     { # gold
         "display":"%",
+        "name": "gold",
         "id":"G",
+        "fgcol": 220,
         "solid": True,
-        "ladder_spot": True
-        #form - needed
+        "ladder_spot": True,
+        "ore": 30,
+        "mineable": {
+            "becomes":".",
+            "loot_table":[
+                {
+                    "item":"gold",
+                    "chance":100,
+                    "count":1
+                },
+                {
+                    "item":"gold",
+                    "chance":3,
+                    "count":1
+                }
+            ]
+        }
     }
 ]
 
@@ -126,6 +213,14 @@ char_to_tile={
     tile["id"]: i
     for i, tile in enumerate(tiles)
 }
+
+ores=[]
+for _, tile in enumerate(tiles):
+    if ("ore" in tile):
+        ores.append({
+            "chance":tile["ore"],
+            "ore":tile["id"]
+        })
 
 def tile_render(tile):
     if (not isinstance(tile, int)):
@@ -177,3 +272,15 @@ def can_spawn_ores(tile):
         return 0
     else:
         return 0
+
+# should be affected by player luck & player depth
+def get_ore_to_spawn():
+    # base 50% chance whether it should even try spawning a mineral, or should just pick stone
+    if (randfloat(0,100)<=50):
+        for _,ore in enumerate(ores):
+            if (randfloat(0,100)<=ore["chance"]):
+                return ore["ore"]
+    return "S" # stone, might make to return whatever is -1 later, unsure
+
+def tile_name(tile):
+    return tiles[tile]["name"]

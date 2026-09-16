@@ -1,4 +1,6 @@
 def clear():
+    # should avoid where possible (e.g: only use when changing screens)
+    # causes graphics to flicker!
     print("\033[H\033[2J", end="")
 
 # 0,0 == 1,1

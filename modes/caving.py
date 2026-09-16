@@ -1,8 +1,11 @@
 from graphics import clear,draw_at
-from tiles import tile_render,is_interactable,tiles
+from tiles import tile_render,is_interactable,tiles,tile_name
 import manager
-from manager import mget, set_map_programatically
+from manager import mget, set_map_programatically, text
 from random import randrange as randfloat
+
+action_text=""
+prior_action_text=""
 
 printx,printy=0,0
 
@@ -19,13 +22,8 @@ def cprintxy(str,x,y):
     printy+=1
 
 def draw():
-    global printx,printy
-    clear()
-    c,r=1,-1
-    # find a clear way to get y align, may not be issue when fullscreen terminal
-    for i in range(5):
-        r+=1
-        print("\n")
+    global printx,printy,action_text
+    c,r=1,5
 
     for y in range(manager.current_map["height"]):
         for x in range(manager.current_map["width"]):
@@ -50,9 +48,10 @@ def draw():
     printy=8
     cprint(player["name"])
     cprint(f"Health: {player['health']}/{player['max_health']}")
-    cprintxy("Inventory",printx,11)
+    cprintxy(text("ui.inventory"),printx,11)
     for k in player["inventory"]:
-        cprint(f"{k} x{player['inventory'][k]}")
+        label=f"item.{k}"
+        cprint(f"{text(label)} x{player['inventory'][k]}")
 
     printy=4
     # draw a little display of the player so that they can see what they are on top of
@@ -61,7 +60,18 @@ def draw():
     cprint(f"{tile}@{tile}")
     cprint(f"{tile}{tile}{tile}")
 
-    if (True): # debug
+    # print action text; describes what you just did
+    printx=0
+    printy=manager.current_map["height"]+5
+    oy=manager.current_map["height"]
+    textspl=prior_action_text.split("\n")
+    # clear prior action text
+    for i in range(len(textspl)):
+        for j in range(len(textspl[i])):
+            draw_at(j,i+oy+5," ")
+    cprint(action_text)
+
+    if (False): # debug
         printx+=5
         printy=2
         cprint(f"map w,h: {manager.current_map["width"]},{manager.current_map["height"]}")
@@ -70,7 +80,7 @@ def draw():
 #        cprint(f"{is_interactable(mget(player["x"],player["y"]))} {mget(player["x"],player["y"])}")
 #        cprint(f"{tiles[mget(player["x"],player["y"])]}")
 
-    # make sure current cell isn't selected
+    # make sure random cell isn't selected and doesn't block UI
     draw_at(0,0,"")
 
 import manager
@@ -79,7 +89,15 @@ from tiles import is_solid,passthrough_item_required,is_interactable,is_mineable
 from inventory import give_loot_table, give_item
 
 def update():
+    global action_text,prior_action_text
+    draw_at(0,0,"") #reset cursor loc
+
+    prior_action_text=action_text
+    action_text=""
+
     full=input("")
+    for i in range(len(full)): # hide text input
+        draw_at(i,1," ")
     if (len(full)>0):
         primary=full[0] # primary action, interact on current tile or move
         secondary=""
@@ -114,6 +132,9 @@ def update():
                     interaction,extra=is_interactable(tile)
                     if (interaction=="pickup"):
                         give_item(manager.player,extra,1)
+                        item_name=text(f"item.{extra}")
+                        # will need updating to figure out whether it is 'a item' or 'the item'
+                        action_text+="\n"+text("actions.new_item.get_singular_a",[item_name])
                         mset(x,y,".")
                     elif (interaction=="go_to"):
                         set_map_programatically(extra)
@@ -122,12 +143,38 @@ def update():
                 tile=mget(x,y)
                 mineable=is_mineable(tile)
                 if (mineable):
+                    # always breaks, tile durability needed
+                    tile_display=text(f"tile.{tile_name(tile)}")
+                    action_text+="\n"+text("actions.pickaxe.hit_tile_break",[tile_display])
+
                     mset(x,y,mineable["becomes"])
-                    give_loot_table(manager.player,mineable["loot_table"])
+                    loot_given=give_loot_table(manager.player,mineable["loot_table"])
+
+                    for item in loot_given:
+                        count=loot_given[item]
+                        item_name=text(f"item.{item}")
+                        if (count==1):
+                            # will need updating to figure out whether it is 'a item' or 'the item'
+                            action_text+="\n"+text("actions.new_item.get_singular_a",[item_name])
+                        else:
+                            action_text+="\n"+text("actions.new_item.get_plural",[count,item_name])
+                    
                     if ("ladder_spot" in tiles[tile]):
                         chance=(1/manager.current_map["ladder_spots"])*100
                         manager.current_map["ladder_spots"]-=1
                         if (manager.current_map["ladder_spots"]==0):
                             mset(x,y,"o") #ensure is always a ladder
+                            if (manager.current_map["ladder_spawned"]==False):
+                                action_text+="\n"+text("ladder_emerges.first_time_tile",[tile_display])
+                            else:
+                                action_text+="\n"+text("ladder_emerges.plural_time_tile",[tile_display])
+                            manager.current_map["ladder_spawned"]=True
                         elif (randfloat(0,100)<=chance):
                             mset(x,y,"o")
+                            if (manager.current_map["ladder_spawned"]==False):
+                                action_text+="\n"+text("ladder_emerges.first_time_tile",[tile_display])
+                            else:
+                                action_text+="\n"+text("ladder_emerges.plural_time_tile",[tile_display])
+                            manager.current_map["ladder_spawned"]=True
+                else:
+                    action_text=text("actions.pickaxe.hit_nothing")

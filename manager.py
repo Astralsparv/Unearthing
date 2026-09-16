@@ -1,5 +1,7 @@
 from map import map_load, map_get, map_set, spawn_ores
 from random import randint
+from graphics import clear
+from text import getLang,getText
 
 current_section="caving"
 
@@ -20,6 +22,7 @@ player={
 }
 
 def set_map_programatically(map_type):
+    clear() # avoid clear(), but is usually needed and easiest here when switching screens
     global current_map
     global player
 
@@ -30,6 +33,7 @@ def set_map_programatically(map_type):
     gen_map()
 
 def set_map(map):
+    clear() # avoid clear(), but is usually needed and easiest here when switching screens
     global current_map
     global player
 
@@ -41,7 +45,9 @@ def gen_map():
 
     spawn_ores(current_map,player["x"],player["y"])
     
-
+def set_lang(lang):
+    global language
+    language=getLang(lang)
 
 def mget(x,y):
     return map_get(x,y,current_map)
@@ -51,4 +57,9 @@ def mset(x,y,v):
 
 def set_section(string):
     global current_section
+    clear() # avoid clear(), but is usually needed and easiest here when switching screens
     current_section=string
+
+def text(fullid,opts=[]):
+    global language
+    return getText(language,fullid,opts)
