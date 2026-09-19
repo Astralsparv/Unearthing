@@ -53,4 +53,4 @@ when you're standing on the tile `.`
 
 The rest of it is basic information such as your health, name and inventory.
 
-The inventory is likely to be revamped to use a hotbar.
+![Gameplay Screenshot](screenshots/gameplay.png)
