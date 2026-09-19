@@ -1,0 +1,91 @@
+{
+    "actions":{
+        "pickaxe":{
+            "hit_nothing": "You swing your pickaxe at absolutely nothing, menacing!",
+            "hit_tile": "You swing your pickaxe at %1",
+            "hit_tile_break": "You swing your pickaxe at %1 and break it",
+            "plan": "You plan to swing your pickaxe at... the current tile?",
+            "plan_left": "You plan to swing your pickaxe at the tile to the west",
+            "plan_right": "You plan to swing your pickaxe at the tile to the east",
+            "plan_up": "You plan to swing your pickaxe at the tile to the north",
+            "plan_down": "You plan to swing your pickaxe at the tile to the south"
+        },
+        "new_item":{
+            "get_singular_a": "You got a %1",
+            "get_singular_the": "You got the %1",
+            "get_plural": "You got %1 %2s"
+        },
+        "pickup":{
+            "plan": "You plan to pick up the item you stand above",
+            "plan_left": "You plan to pick up the item at the tile to the west",
+            "plan_right": "You plan to pick up the item at the tile to the east",
+            "plan_up": "You plan to pick up the item at the tile to the north",
+            "plan_down": "You plan to pick up the item at the tile to the south"
+        },
+        "use_ladder":{
+            "plan_left": "You plan to use the ladder to the west",
+            "plan_right": "You plan to use the ladder to the east",
+            "plan_up": "You plan to use the ladder to the north",
+            "plan_down": "You plan to use the ladder to the south"
+        },
+        "use_shaft":{
+            "plan_left": "You plan to use the shaft to the west",
+            "plan_right": "You plan to use the shaft to the east",
+            "plan_up": "You plan to use the shaft to the north",
+            "plan_down": "You plan to use the shaft to the south"
+        },
+        "move":{
+            "plan_left": "You plan to move to the west",
+            "plan_right": "You plan to move to the east",
+            "plan_up": "You plan to move to the north",
+            "plan_down": "You plan to move to the south",
+            "left": "You move to the west and are now on %1",
+            "right": "You move to the east and are now on %1",
+            "up": "You move to the north and are now on %1",
+            "down": "You move to the south and are now on %1"
+        },
+        "nothing":{
+            "do": "You did absolutely nothing. Proud of you.",
+            "plan": "You plan to do absolutely nothing"
+        }
+    },
+    "ladder_emerges":{
+        "first_time_tile": "A ladder can be seen underneath the %1 you just broke",
+        "plural_time_tile": "Another ladder has emerged from beneath the %1",
+        "first_time_enemy": "A ladder can be seen where the %1 died",
+        "plural_time_enemy": "Another ladder has emerged from beneath the %1"
+    },
+    "title":{
+        "new_game": "New Game",
+        "manual": "Manual"
+    },
+    "ui":{
+        "health": "Health",
+        "inventory": "Inventory"
+    },
+    "item":{
+        "stone": "Stone",
+        "coal": "Coal",
+        "copper": "Copper",
+        "iron": "Iron",
+        "gold": "Gold",
+        "food": "Food",
+        "floatie": "Floatie"
+    },
+    "tile":{
+        "oob": "[out of bounds; error!!!]",
+        "floor": "Floor",
+        "weak_soil": "Weak Soil",
+        "weak_soil_dug": "Weak Soil (dug)",
+        "stone": "Stone",
+        "coal": "Coal",
+        "copper": "Copper",
+        "iron": "Iron",
+        "gold": "Gold",
+        "food": "Food",
+        "floatie": "Floatie",
+        "water": "Water",
+        "shaft": "Shaft",
+        "ladder": "Ladder"
+    }
+}

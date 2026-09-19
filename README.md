@@ -2,6 +2,8 @@
 
 A text based mining game inspired by Stardew Valley and Steamworld Dig.
 
+Designed for use with [More Perfect DOS VGA Font](https://laemeur.sdf.org/fonts/) (or stored locally at [MorePerfectDOSVGA.ttf](MorePerfectDOSVGA.ttf))and a 184x24 terminal
+
 ## Controls
 
 The game does not run in real-time, it only updates each time you input (by pressing enter).

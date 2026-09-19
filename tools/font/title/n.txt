@@ -1,0 +1,9 @@
+ .s       s.
+SSSs      SS
+SSsSSs    SS
+SS sSSs   SS
+SS  sSSs  SS
+SS   sSSs SS
+SS    sSSsSS
+SS     sSSSS
+'s       Ss'
