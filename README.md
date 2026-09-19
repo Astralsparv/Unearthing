@@ -2,7 +2,7 @@
 
 A text based mining game inspired by Stardew Valley and Steamworld Dig.
 
-Designed for use with [More Perfect DOS VGA Font](https://laemeur.sdf.org/fonts/) (or stored locally at [MorePerfectDOSVGA.ttf](MorePerfectDOSVGA.ttf))and a 184x24 terminal
+Designed for use with [More Perfect DOS VGA Font](https://laemeur.sdf.org/fonts/) (or stored locally at [MorePerfectDOSVGA.ttf](MorePerfectDOSVGA.ttf))and a 80x24 terminal.
 
 ## Controls
 
@@ -10,17 +10,23 @@ The game does not run in real-time, it only updates each time you input (by pres
 
 You can choose to make no actions, or you can type in inputs.
 
+### Directions
+
 For moving around, this would be 'w','a','s' and 'd'.
 
-For actions, you can interact with the tile you are on top of with 'e'.
+Actions are made with the 'q' and 'e' key (see below).
 
-### Mining and attacking
+If you don't type an action, you will simply move in the direction.
 
-To mine or attack, you type two keys instead of one.
+### Interactions
 
-The first key is the direction (wasd), whilst the second key is 'q'.
+To mine or attack, you use 'q' and 'e', where 'q' is using your item and 'e' is interacting with a tile, e.g: using a ladder or picking up an item.
 
-Once a hotbar is implemented, it will be using your selected item (a weapon or a pickaxe), as of writing this; it is always the pickaxe (as no enemies are implemented).
+The item that will be used will be the currently selected one on your hotbar.
+
+### Hotbar
+
+The hotbar can be used to select different items with the left and right arrow key, where the tile surrounded in `<>` is the selected item.
 
 ## UI
 
