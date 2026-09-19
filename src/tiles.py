@@ -49,14 +49,16 @@ tiles=[
         "display": ":",
         "name": "ladder",
         "fgcol": 94,
-        "id": ":"
+        "id": ":",
+        "solid": True
     },
     {
         "display": "o",
         "name": "shaft",
         "fgcol": 94,
         "id": "o",
-        "go_to": "new_cave"
+        "go_to": "new_cave",
+        "solid": True
     },
     { # weak soil (mined)
         "display":".",
@@ -222,11 +224,13 @@ for _, tile in enumerate(tiles):
             "ore":tile["id"]
         })
 
-def tile_render(tile):
+def tile_render(tile,fgcol=True,bgcol=True):
     if (not isinstance(tile, int)):
         return str(tile)
     if (tile>=0 and len(tiles)>tile):
         obj=tiles[tile]
+        fg=obj.get("fgcol")
+        bg=obj.get("bgcol")
         if ("form" in obj):
             return form(obj["display"],obj["form"])
         if "fgcol" in obj or "bgcol" in obj:

@@ -1,14 +1,24 @@
 {
     "actions":{
         "pickaxe":{
-            "hit_nothing": "You swing your pickaxe at absolutely nothing, menacing!",
-            "hit_tile": "You swing your pickaxe at %1",
-            "hit_tile_break": "You swing your pickaxe at %1 and break it",
+            "hit_nothing": "You swing your pickaxe and hit absolutely nothing, menacing!",
+            "hit": "You swing your pickaxe at %1",
+            "hit_break": "You swing your pickaxe at %1 and break it",
             "plan": "You plan to swing your pickaxe at... the current tile?",
             "plan_left": "You plan to swing your pickaxe at the tile to the west",
             "plan_right": "You plan to swing your pickaxe at the tile to the east",
             "plan_up": "You plan to swing your pickaxe at the tile to the north",
             "plan_down": "You plan to swing your pickaxe at the tile to the south"
+        },
+        "sword":{
+            "hit_nothing": "You swing your sword at absolutely nothing, menacing!",
+            "hit": "You swing your sword at %1",
+            "hit_break": "You swing your pickaxe at %1 and break it",
+            "plan": "You plan to swing your sword at... yourself?",
+            "plan_left": "You plan to swing your sword to the west",
+            "plan_right": "You plan to swing your sword to the east",
+            "plan_up": "You plan to swing your sword to the north",
+            "plan_down": "You plan to swing your sword to the south"
         },
         "new_item":{
             "get_singular_a": "You got a %1",
@@ -70,7 +80,9 @@
         "iron": "Iron",
         "gold": "Gold",
         "food": "Food",
-        "floatie": "Floatie"
+        "floatie": "Floatie",
+        "pickaxe": "Pickaxe",
+        "sword": "Sword"
     },
     "tile":{
         "oob": "[out of bounds; error!!!]",

@@ -20,8 +20,22 @@ player={
     "health": 10,
     "max_health": 10,
     "name": "PlayerName",
-    "inventory": {}
+    "inventory": [
+        {
+            "item": "pickaxe",
+            "count": 1
+        },
+        {
+            "item": "sword",
+            "count": 1
+        }
+    ],
+    "selected_inventory_slot": 0
 }
+
+def current_item():
+    global player
+    return player["inventory"][player["selected_inventory_slot"]]
 
 def set_map_programatically(map_type):
     clear() # avoid clear(), but is usually needed and easiest here when switching screens
@@ -79,5 +93,5 @@ def text(fullid,opts=[]):
 keyboard=Keyboard()
 keyboard.setup()
 
-def get_key():
-    return keyboard.get_key()
+def get_key(timeout=None):
+    return keyboard.get_key(timeout=timeout)

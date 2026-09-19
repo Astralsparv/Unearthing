@@ -2,6 +2,7 @@ from graphics import clear,cprint,render
 from manager import set_section,text
 from manager import get_key
 from font import load_font,render_str
+import time
 
 font=load_font("title")
 
@@ -17,10 +18,21 @@ options=[
 ]
 
 current_option=0
-
+scroll=0
+txt_len=len(render_str(font,"the unearthing  ").split("\n")[0])
+last_scroll=time.monotonic()
 def draw():
+    global scroll,last_scroll
+
     clear()
-    cprint(render_str(font,"the unearthing"))
+    cprint(render_str(font,"the unearthing  the unearthing"),offsetX=scroll)
+
+    now=time.monotonic()
+    dt=now-last_scroll
+    last_scroll=now
+    scroll-=10*dt
+    if (scroll<=-txt_len):
+        scroll+=txt_len
     
     for ind,opt in enumerate(options):
         str=""
@@ -32,7 +44,7 @@ def draw():
     
 def update():
     global current_option
-    key=get_key()
+    key=get_key(timeout=0.01)
     if (key==None):
         return
     if (key=="RIGHT" or key=="DOWN"):

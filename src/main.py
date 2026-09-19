@@ -1,9 +1,12 @@
-from graphics import clear
+from graphics import clear_fullscreen
 from manager import set_map,set_map_programatically,gen_map,set_section,set_lang
 import manager
 from gameloop import draw, update
 # sys
 from time import sleep,perf_counter
+
+clear_fullscreen()
+
 
 #set_map("cave/0")
 #set_map("cave/2")
