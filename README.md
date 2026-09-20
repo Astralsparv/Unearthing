@@ -4,6 +4,18 @@ A text based mining game inspired by Stardew Valley and Steamworld Dig.
 
 Designed for use with [More Perfect DOS VGA Font](https://laemeur.sdf.org/fonts/) (or stored locally at [MorePerfectDOSVGA.ttf](MorePerfectDOSVGA.ttf))and a 80x24 terminal.
 
+## Running the game
+
+If you are on Linux, you can run `run_linux.sh`.
+
+If you are on Windows, you can run `run_windows.bat`.
+
+If that doesn't work, ensure you have `python3` installed.
+
+If it still isn't working, try running `src/main.py` from the terminal (you will want to `cd` into `src/`).
+
+The end-user runtime experience will be focused on later on, e.g: making individual releases with packaged python runtimes to make it fully portable.
+
 ## Controls
 
 The game does not run in real-time, it only updates each time you input (by pressing enter).
