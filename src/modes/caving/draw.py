@@ -8,7 +8,7 @@ from manager import get_key, current_item
 from util import chance,wrap
 
 from modes.caving.helper import getActionText, rendering_game
-from modes.caving.entities import active_entities
+import modes.caving.player as cplayer
 
 def get_item_print(item,count,selected=False):
     label=text(f'item.{item}')
@@ -79,4 +79,15 @@ def draw():
     draw_hotbar(manager.player["selected_inventory_slot"])
 
     curs(map_w+2,6)
+
+    str=""
+    direction=cplayer.direction
+    action=cplayer.action
+    if (direction):
+        str+=direction
+        if (action):
+            str+=" > "+action
+    elif (action):
+        str+=action
+    cprint(str)
     cprint(wrap(getActionText(),80-map_w-4))
