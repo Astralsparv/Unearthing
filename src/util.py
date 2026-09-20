@@ -4,6 +4,10 @@ def chance(perc):
     return (random()*100<=perc)
 
 def wrap(text, width):
+    text=str(text)
+
+    if (width<=0):
+        return ""
     lines=[]
 
     for line in text.split("\n"):
@@ -35,3 +39,10 @@ def wrap(text, width):
             lines.append(current)
 
     return "\n".join(lines)
+
+direction_as_word={
+    "w": "up",
+    "a": "left",
+    "s": "down",
+    "d": "right"
+}

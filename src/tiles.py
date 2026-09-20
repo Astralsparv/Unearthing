@@ -21,7 +21,7 @@ tiles=[
         "fgcol": 8,
         "solid": False,
         "ore_spawnable":5,
-        "enemy_spawnable":True,
+        "enemy_spawnable":5,
         "id":"."
     },
     {
@@ -58,7 +58,8 @@ tiles=[
         "fgcol": 94,
         "id": "o",
         "go_to": "new_cave",
-        "solid": True
+        "solid": True,
+        "animation": "descend_into_shaft"
     },
     { # weak soil (mined)
         "display":".",
@@ -273,6 +274,14 @@ def can_spawn_ores(tile):
     if (tile>=0 and len(tiles)>tile):
         if ("ore_spawnable" in tiles[tile]):
             return tiles[tile]["ore_spawnable"]
+        return 0
+    else:
+        return 0
+
+def can_spawn_enemies(tile):
+    if (tile>=0 and len(tiles)>tile):
+        if ("enemy_spawnable" in tiles[tile]):
+            return tiles[tile]["enemy_spawnable"]
         return 0
     else:
         return 0

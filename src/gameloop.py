@@ -1,4 +1,4 @@
-import modes.caving as caving, modes.title as title
+import modes.caving.main as caving, modes.title as title
 import manager
 
 def update():

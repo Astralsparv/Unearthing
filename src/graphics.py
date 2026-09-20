@@ -9,6 +9,37 @@ printx,printy=0,0
 # regex magic
 ANSI_RE=re.compile(r"\x1b\[[0-9;?]*[ -/]*[@-~]")
 
+viewport={
+    "x": 0,
+    "y": 0,
+    "w": WIDTH,
+    "h": HEIGHT
+}
+
+camera={
+    "x":0,
+    "y":0
+}
+def set_viewport(x=0,y=0,w=WIDTH,h=HEIGHT):
+    global viewport
+    viewport={
+        "x":int(x),
+        "y":int(y),
+        "w":int(w),
+        "h":int(h),
+    }
+
+def set_camera(x=None,y=None):
+    global camera
+    if (x==None and y==None):
+        camera={"x":0,"y":0}
+        return
+
+    if (x!=None):
+        camera["x"]=int(x)
+    if (y!=None):
+        camera["y"]=int(y)
+
 def clear_fullscreen():
     w,h=shutil.get_terminal_size()
 
@@ -19,7 +50,14 @@ def clear_fullscreen():
     sys.stdout.write(txt)
     sys.stdout.flush() # no flash
 def clear():
-    global buffer,printx,printy
+    global buffer,printx,printy,viewport
+    viewport={
+        "x": 0,
+        "y": 0,
+        "w": WIDTH,
+        "h": HEIGHT
+    }
+
     printx,printy=0,0
     buffer=[[(" ","") for _ in range(WIDTH)] for _ in range(HEIGHT)]
 
@@ -39,7 +77,55 @@ def curs_offset(x=None,y=None):
         printy+=y
     return printx,printy
 
+def get_char(x,y):
+    x-=camera["x"]
+    y-=camera["y"]
+    if (not (0<=x<viewport["w"])):
+        return ("","")
+
+    if (not (0<=y<viewport["h"])):
+        return ("","")
+
+    x+=viewport["x"]
+    y+=viewport["y"]
+
+    if (not (0<=x<WIDTH)):
+        return ("","")
+    if (not (0<=y<HEIGHT)):
+        return ("","")
+    return buffer[y][x]
+
+def draw_at_prec(x,y,string,ansi):
+    x=int(x)
+    y=int(y)
+
+    global buffer
+    string=str(string)
+    ansi=str(ansi)
+
+    x-=camera["x"]
+    y-=camera["y"]
+    
+    if (not (0<=x<viewport["w"])):
+        return
+
+    if (not (0<=y<viewport["h"])):
+        return
+
+    x+=viewport["x"]
+    y+=viewport["y"]
+
+    if (not (0<=x<WIDTH)):
+        return
+
+    if (not (0<=y<HEIGHT)):
+        return
+    
+    buffer[y][x]=(string,ansi)
+
 def draw_at(x,y,string,offsetX=0,offsetY=0):
+    x=int(x)
+    y=int(y)
     offsetX=int(offsetX)
     offsetY=int(offsetY)
     string=str(string)
@@ -48,13 +134,20 @@ def draw_at(x,y,string,offsetX=0,offsetY=0):
         y+=1
 
 def draw_at_col(x,y,string,offsetX=0,offsetY=0,bgcol=None,fgcol=None):
+    x=int(x)
+    y=int(y)
+    offsetX=int(offsetX)
+    offsetY=int(offsetY)
     string=col(str(string),bgcol=bgcol,fgcol=fgcol)
     draw_at(x,y,string,offsetX=offsetX,offsetY=offsetY)
     
 def draw_line(x,y,string,offsetX=0,offsetY=0):
+    x=int(x)
+    y=int(y)
+    offsetX=int(offsetX)
+    offsetY=int(offsetY)
+
     y+=offsetY
-    if (not (0<=y<HEIGHT)):
-        return
 
     ansi=""
 
@@ -76,8 +169,7 @@ def draw_line(x,y,string,offsetX=0,offsetY=0):
         
         char=string[pos]
 
-        if (0<=px<WIDTH):
-            buffer[y][px]=(char,ansi)
+        draw_at_prec(px,y,char,ansi)
 
         px+=1
         pos+=1

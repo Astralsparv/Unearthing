@@ -1,14 +1,19 @@
 from util import chance
 
-def give_item(player,item,count):
+def has_item(player,item):
     for i in range(len(player["inventory"])):
         if (player["inventory"][i]["item"]==item):
-            player["inventory"][i]["count"]+=count
-            return
-    player["inventory"].append({
-        "item":item,
-        "count":count
-    })
+            return i
+    return False
+def give_item(player,item,count):
+    n=has_item(player,item)
+    if (n):
+        player["inventory"][n]["count"]+=count
+    else:
+        player["inventory"].append({
+            "item":item,
+            "count":count
+        })
 
 def give_loot_table(player,table):
     given={}
@@ -27,13 +32,13 @@ items={
         "type": "tool",
         "damage_tiles": 1,
         "range_infront":[0,1,0],
-        "animation": "tile_infront" # break infront
+        "animation": "hit_tile"
     },
     "sword":{
         "type": "weapon",
         "damage_enemies": 1,
         "range_infront":[1,1,1],
-        "animation": "swipe_infront" # swiping anim
+        "animation": "sword_swipe"
     },
     "stone":{
         "type": "resource"

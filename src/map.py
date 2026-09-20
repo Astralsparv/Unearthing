@@ -21,6 +21,8 @@ def randomDir():
         return 0,1
 
 def map_get(x,y,map):
+    x=int(x)
+    y=int(y)
     if (len(map["data"])<=y):
         return 0
     elif (len(map["data"][y])<=x):
@@ -29,6 +31,8 @@ def map_get(x,y,map):
         return map["data"][y][x]
 
 def map_set(x,y,v,map):
+    x=int(x)
+    y=int(y)
     if (isinstance(v,str)):
         map["data"][y][x]=char_to_tile[v]
     else:
