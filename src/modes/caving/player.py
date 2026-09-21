@@ -1,7 +1,7 @@
 from graphics import draw_at,cprint,clear,render,curs,curs_offset,draw_at_col
 from tiles import tile_render,is_interactable,tiles,tile_name
 import manager
-from manager import mset, mget, set_map_programatically, text
+from manager import mset, mget, set_map_programatically, text, set_section
 from tiles import is_solid,passthrough_item_required,is_interactable,is_mineable
 from items import give_loot_table, give_item, can_use, item_properties, has_item
 from manager import get_key, current_item
@@ -87,6 +87,10 @@ def update_player_actions():
         manager.player["selected_inventory_slot"]+=1
         if (manager.player["selected_inventory_slot"]>=len(manager.player["inventory"])):
             manager.player["selected_inventory_slot"]=0
+    elif (key=="p" or key=="ESC"):
+        set_section("pause")
+        direction,action=None,None
+        return
 
     if (direction!=None):
         if (action==None):

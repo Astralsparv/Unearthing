@@ -68,7 +68,17 @@
     "title":{
         "new_game": "New Game",
         "continue": "Continue",
-        "manual": "Manual"
+        "manual": "Manual",
+        "save_slot": "Save Slots"
+    },
+    "pause":{
+        "resume": "Resume Game",
+        "save": "Save Game",
+        "exit": "Exit Game"
+    },
+    "save":{
+        "save_slot": "Save Slot",
+        "load_slot": "Load Slot"
     },
     "ui":{
         "health": "Health",

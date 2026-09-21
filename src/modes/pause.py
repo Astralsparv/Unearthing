@@ -4,38 +4,39 @@ from manager import get_key
 from font import load_font,render_str
 import time
 
-font=load_font("title")
-option_font=load_font("pico")
+font=load_font("pico")
+
+def resume():
+    set_section("caving")
+
+def save():
+    set_section("save")
 
 options=[
     {
-        "label":"title.new_game",
-        "section":"caving"
+        "label":"pause.resume",
+        "func": resume
     },
     {
-        "label":"title.continue",
-        "section":"caving"
+        "label":"pause.save",
+        "func":save
     },
     {
-        "label":"title.manual",
-        "section":"manual"
-    },
-    {
-        "label":"title.save_slots",
-        "section":"save"
+        "label":"pause.exit",
+        "func":exit
     }
 ]
 
 current_option=0
 scroll=0
-txt_len=len(render_str(font,"the unearthing  ").split("\n")[0])
+txt_len=len(render_str(font,"paused    ").split("\n")[0])
 last_scroll=time.monotonic()
-use_font=False # font too big for 80x24, even at 3x5
+
 def draw():
     global scroll,last_scroll
 
     clear()
-    cprint(render_str(font,"the unearthing  the unearthing"),offsetX=scroll)
+    cprint(render_str(font,"paused    paused    paused"),offsetX=scroll)
 
     now=time.monotonic()
     dt=now-last_scroll
@@ -50,10 +51,7 @@ def draw():
         if (current_option==ind):
             str="> "
         str+=f"{text(opt["label"])}"
-        if (use_font):
-            cprint(render_str(option_font,str))
-        else:
-            cprint(str)
+        cprint(str)
     render()
     
 def update():
@@ -65,6 +63,8 @@ def update():
         current_option+=1
     if (key=="LEFT" or key=="UP"):
         current_option-=1
+    if (key=="p" or key=="ESC"):
+        resume()
 
     # when going oob, goes to other side
     if (current_option<0):
@@ -73,5 +73,4 @@ def update():
         current_option=0
     
     if (key=="ENTER"):
-        if ("section" in options[current_option]):
-            set_section(options[current_option]["section"])
+        options[current_option]["func"]()
