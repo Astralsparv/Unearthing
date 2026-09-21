@@ -57,6 +57,11 @@ def map_load(map_src):
                 px=j
                 py=i
                 mapdat[i][j]=char_to_tile["."]
+            elif (char=="O"):
+                if (chance(50)): # 50% chance of being a ladder, or being floor
+                    mapdat[i][j]=char_to_tile["o"]
+                else:
+                    mapdat[i][j]=char_to_tile["."]
             else:
                 mapdat[i][j]=char_to_tile[mapdat[i][j]]
             if ("ladder_spawn" in tiles[mapdat[i][j]]):

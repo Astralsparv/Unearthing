@@ -44,7 +44,7 @@ def set_map_programatically(map_type):
 
     map=""
     if (map_type=="new_cave"):
-        map=f"caves/{randint(0,2)}"
+        map=f"caves/{randint(0,5)}"
     current_map,player["x"],player["y"]=map_load(f"assets/maps/{map}")
     gen_map()
 
