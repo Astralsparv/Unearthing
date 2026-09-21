@@ -1,10 +1,11 @@
-from graphics import clear,cprint,render
+from graphics import clear,cprint,render,curs_offset
 from manager import set_section,text
 from manager import get_key
 from font import load_font,render_str
 import time
 
 font=load_font("title")
+option_font=load_font("menu")
 
 options=[
     {
@@ -35,11 +36,12 @@ def draw():
         scroll+=txt_len
     
     for ind,opt in enumerate(options):
+        curs_offset(0,1)
         str=""
         if (current_option==ind):
             str="> "
         str+=f"{text(opt["label"])}"
-        cprint(str)
+        cprint(render_str(option_font,str))
     render()
     
 def update():

@@ -17,7 +17,7 @@ def render_str(font,string):
     if (string==""):
         return ""
     # woah new trick
-    sepstr=" "*font.get("sep", 2)
+    sepstr=" "*font.get("sep", 1)
 
     # get font height
     height=max(

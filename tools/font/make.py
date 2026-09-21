@@ -21,6 +21,8 @@ for i in range(95): # all ascii
     # skip 32; space
     char=chr(i+33) # to string
     path=f"{font_loc}/{char}.txt"
+    if (not os.path.isfile(path)):
+        path=f"{font_loc}/{ord(char)}.txt"
     if (os.path.isfile(path)):
         with open(path,"r") as r:
             font[char]=r.read()

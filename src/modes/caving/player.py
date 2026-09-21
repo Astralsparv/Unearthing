@@ -74,7 +74,6 @@ def update_player_actions():
             direction=None
         else:
             direction=key
-            action=None
     elif (key in ("e","q")):
         if (action==key):
             action=None
