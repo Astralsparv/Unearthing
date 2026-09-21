@@ -4,7 +4,7 @@ import manager
 from gameloop import draw, update
 # sys
 from time import sleep,perf_counter
-
+from sfx import play_sfx
 clear_fullscreen()
 
 
@@ -26,6 +26,9 @@ if os.name == "nt":
 
     if kernel32.GetConsoleMode(stdout, ctypes.byref(mode)):
         kernel32.SetConsoleMode(stdout, mode.value | 0x0004)
+
+
+play_sfx("ambience",loop=True)
 # sleep at 1/60 - 60fps
 draw() # make so you dont need to make an action to see screen for first time
 while True:
