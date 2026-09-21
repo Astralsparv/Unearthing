@@ -13,6 +13,10 @@ options=[
         "section":"caving"
     },
     {
+        "label":"title.continue",
+        "section":"caving"
+    },
+    {
         "label":"title.manual",
         "section":"manual"
     }
@@ -22,6 +26,7 @@ current_option=0
 scroll=0
 txt_len=len(render_str(font,"the unearthing  ").split("\n")[0])
 last_scroll=time.monotonic()
+use_font=False # font too big for 80x24, even at 3x5
 def draw():
     global scroll,last_scroll
 
@@ -41,7 +46,10 @@ def draw():
         if (current_option==ind):
             str="> "
         str+=f"{text(opt["label"])}"
-        cprint(render_str(option_font,str))
+        if (use_font):
+            cprint(render_str(option_font,str))
+        else:
+            cprint(str)
     render()
     
 def update():

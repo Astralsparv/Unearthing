@@ -67,6 +67,7 @@
     },
     "title":{
         "new_game": "New Game",
+        "continue": "Continue",
         "manual": "Manual"
     },
     "ui":{
